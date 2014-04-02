@@ -1,0 +1,7 @@
+Name: PJS.ThemeStarter
+Author: Philip Senechal
+Website: http://philipsenechal.com
+Description: Empty base theme for customization
+Version: 1.0
+# todo: provide tags
+# Tags: Classic, Serif

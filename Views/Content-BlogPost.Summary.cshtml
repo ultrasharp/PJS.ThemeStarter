@@ -1,0 +1,21 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.MediaLibrary.Fields
+
+@{ 
+    var blogPost = Model.ContentItem;
+    var part = (Orchard.ContentManagement.ContentPart)Model.ContentItem.BlogPostPart;
+    var imageField = part.Fields.Where(field => field.PartFieldDefinition.Name == "BlogPostImage").SingleOrDefault() as MediaLibraryPickerField;
+}
+
+@if (imageField != null) {
+    foreach (var mediapart in Model.ContentItem.BlogPostPart.BlogPostImage.MediaParts) {
+        <img src="@mediapart.MediaUrl" alt="@mediapart.AlternateText" />
+    }
+}
+        
+@blogPost.TitlePart.Title
+@blogPost.CommonPart.CreatedUtc.ToLocalTime().ToString("MMMM d, yyyy")
+@blogPost.CommonPart.Owner.UserName
+@Display(Model.Tags)
+@Display(Model.CommentsCount)
+@Display(Model.Summary)

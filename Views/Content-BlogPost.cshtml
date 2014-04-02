@@ -1,0 +1,36 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.MediaLibrary.Fields
+
+@{ 
+    var blogPost = Model.ContentItem;
+    var part = (Orchard.ContentManagement.ContentPart)Model.ContentItem.BlogPostPart;
+    var imageField = part.Fields.Where(field => field.PartFieldDefinition.Name == "BlogPostImage").SingleOrDefault() as MediaLibraryPickerField;
+
+    Layout.Title = blogPost.TitlePart.Title;
+}
+
+@if (imageField != null) {
+    foreach (var mediapart in Model.ContentItem.BlogPostPart.BlogPostImage.MediaParts) {
+        <img src="@mediapart.MediaUrl" alt="@mediapart.AlternateText" />
+    }
+}
+
+@blogPost.TitlePart.Title
+@blogPost.CommonPart.CreatedUtc.ToLocalTime().ToString("MMMM d, yyyy")
+@blogPost.CommonPart.Owner.UserName</a>
+@Display(Model.Tags)
+@Display(Model.CommentsCount)
+@Display(Model.Summary)
+
+<ul>
+    <li><a href="http://www.facebook.com/sharer.php?s=100&amp;p[url]=@Request.Url.AbsoluteUri&amp;p[title]=@blogPost.TitlePart.Title" target="_blank">Facebook </a></li>
+    <li><a href="http://twitter.com/home?status=@blogPost.TitlePart.Title @Request.Url.AbsoluteUri" target="_blank">Twitter </a></li>
+    <li><a href="http://linkedin.com/shareArticle?mini=true&amp;url=@Request.Url.AbsoluteUri&amp;title=@blogPost.TitlePart.Title" target="_blank">LinkedIn </a></li>
+    <li><a href="http://reddit.com/submit?url=@Request.Url.AbsoluteUri&amp;title=@blogPost.TitlePart.Title" target="_blank">Reddit </a></li>
+    <li><a href="http://www.tumblr.com/share/link?url=@Request.Url.AbsoluteUri&amp;name=@blogPost.TitlePart.Title&amp;description=" target="_blank">Tumblr </a></li>
+    <li><a href="https://plus.google.com/share?url=@Request.Url.AbsoluteUri" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" target="_blank">Google +1 </a></li>
+    <li><a href="http://pinterest.com/pin/create/button/?url=@Request.Url.AbsoluteUri&amp;description=@blogPost.TitlePart.Title&amp;media=http%3A%2F%2Ftheme-fusion.com%2Favada%2Fwp-content%2Fuploads%2F2013%2F05%2Fblog_opt_6.jpg" target="_blank">Pinterest </a></li>
+    <li><a href="mailto:?subject=@blogPost.TitlePart.Title&amp;body=@Request.Url.AbsoluteUri">Email </a></li>
+</ul>
+
+@Display(Model.Footer)
